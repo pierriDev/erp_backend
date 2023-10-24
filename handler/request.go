@@ -117,7 +117,7 @@ func (r *CreateUserRequest) Validate() error {
 	return nil
 }
 
-// USER REQUESTS
+// EMPLOYEE REQUESTS
 type CreateUserWorkerRequest struct {
 	Name         string `json:"name"`
 	CPF          string `json:"cpf"`
@@ -178,4 +178,29 @@ func (r *CreateUserWorkerRequest) Validate() error {
 	}
 
 	return nil
+}
+
+type UpdateEmployeeRequest struct {
+	Name         string `json:"name"`
+	CPF          string `json:"cpf"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Address      string `json:"adress"`
+	Number       uint   `json:"number"`
+	Neighborhood string `json:"neighborhood"`
+	CEP          string `json:"cep"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Country      string `json:"country"`
+	Password     string `json:"password"`
+	Picture      string `json:"picture"`
+}
+
+func (r *UpdateEmployeeRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Name != "" || r.CPF != "" || r.Phone != "" || r.Email != "" || r.Address != "" || r.Number > 0 || r.Neighborhood != "" || r.CEP != "" || r.City != "" || r.State != "" || r.Country != "" || r.Password != "" || r.Picture != "" {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
 }

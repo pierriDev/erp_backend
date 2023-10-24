@@ -27,7 +27,7 @@ func UpdateOpeningHandler(c *gin.Context) {
 
 	opening := schemas.Opening{}
 
-	if err := db.First(&opening, id).Error; err != nil {
+	if err := db.Preload("User.Address").First(&opening, id).Error; err != nil {
 		logger.ErrorF("Opening de id: %s não foi encontrada", id)
 		sendError(c, http.StatusNotFound, fmt.Sprintf("A opening de id %s não foi encontrada", id))
 		return
