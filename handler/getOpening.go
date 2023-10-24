@@ -8,7 +8,7 @@ import (
 	"github.com/pierriDev/erp_backend.git/schemas"
 )
 
-func DeleteOpeningHandler(c *gin.Context) {
+func GetOpeningHandler(c *gin.Context) {
 	id := c.Query("id")
 	if id == "" {
 		logger.ErrorF("A Query da requisição está vazia ou mal formada")
@@ -21,13 +21,6 @@ func DeleteOpeningHandler(c *gin.Context) {
 	if err := db.First(&opening, id).Error; err != nil {
 		logger.ErrorF("Opening de id: %s não foi encontrada", id)
 		sendError(c, http.StatusNotFound, fmt.Sprintf("A opening de id %s não foi encontrada", id))
-		return
-	}
-
-	//Delete Opening
-	if err := db.Delete(&opening).Error; err != nil {
-		logger.ErrorF("Erro ao deletar a opening de id: %s", id)
-		sendError(c, http.StatusInternalServerError, "Erro ao deletar a opening")
 		return
 	}
 
