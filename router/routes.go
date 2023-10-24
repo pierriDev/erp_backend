@@ -11,10 +11,17 @@ func initializeRoutes(router *gin.Engine) {
 	//ROTAS DE EXEMPLO (CRIAS AS PROPRIAS DEPOIS)
 	v1 := router.Group("/api/v1/")
 	{
+		//OPENINGS
 		v1.GET("/openings", handler.ListOpeningHandler)
 		v1.GET("/opening", handler.GetOpeningHandler)
 		v1.POST("/opening", handler.CreateOpeningHandler)
 		v1.PUT("/opening", handler.UpdateOpeningHandler)
 		v1.DELETE("/opening", handler.DeleteOpeningHandler)
+
+		//USER
+		v1.POST("/user", handler.CreateUserHandler)
+
+		//Employee
+		v1.POST("/employee", handler.CreateEmployeeHandler)
 	}
 }
