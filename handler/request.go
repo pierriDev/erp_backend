@@ -204,3 +204,82 @@ func (r *UpdateEmployeeRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// CLIENT REQUESTS
+type CreateClientRequest struct {
+	Name         string `json:"name"`
+	CPF          string `json:"cpf"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Adress       string `json:"adress"`
+	Number       uint   `json:"number"`
+	Neighborhood string `json:"neighborhood"`
+	CEP          string `json:"cep"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Country      string `json:"country"`
+}
+
+func (r *CreateClientRequest) Validate() error {
+	if r.Name == "" && r.CPF == "" && r.Phone == "" && r.Email == "" && r.Adress == "" && r.Number <= 0 && r.Neighborhood == "" && r.CEP == "" {
+		logger.ErrorF("The body that broke: %+v", r)
+		return fmt.Errorf("O Body da requisição está vazio ou mal formado")
+	}
+
+	if r.Name == "" {
+		return errParamIsRequired("`Nome`", "string")
+	}
+
+	if r.CPF == "" {
+		return errParamIsRequired("CPF", "string")
+	}
+
+	if r.Phone == "" {
+		return errParamIsRequired("Telefone", "string")
+	}
+
+	if r.Email == "" {
+		return errParamIsRequired("Email", "string")
+	}
+
+	if r.Adress == "" {
+		return errParamIsRequired("Endereço", "string")
+	}
+
+	if r.Number <= 0 {
+		return errParamIsRequired("Numero", "number")
+	}
+
+	if r.Neighborhood == "" {
+		return errParamIsRequired("Bairro", "string")
+	}
+
+	if r.CEP == "" {
+		return errParamIsRequired("Cep", "string")
+	}
+
+	return nil
+}
+
+type UpdateClientRequest struct {
+	Name         string `json:"name"`
+	CPF          string `json:"cpf"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Address      string `json:"adress"`
+	Number       uint   `json:"number"`
+	Neighborhood string `json:"neighborhood"`
+	CEP          string `json:"cep"`
+	City         string `json:"city"`
+	State        string `json:"state"`
+	Country      string `json:"country"`
+}
+
+func (r *UpdateClientRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Name != "" || r.CPF != "" || r.Phone != "" || r.Email != "" || r.Address != "" || r.Number > 0 || r.Neighborhood != "" || r.CEP != "" || r.City != "" || r.State != "" || r.Country != "" {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}

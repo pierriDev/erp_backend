@@ -27,5 +27,12 @@ func initializeRoutes(router *gin.Engine) {
 		v1.POST("/employee", handler.CreateEmployeeHandler)
 		v1.PUT("/employee", handler.UpdateEmployeeHandler)
 		v1.DELETE("/employee", handler.DeleteEmployeeHandler)
+
+		//Clients
+		v1.GET("/clients", handler.ListClientHandler)
+		v1.GET("/client", handler.GetClientHandler)
+		v1.POST("/client", handler.CreateClientHandler)
+		v1.PUT("/client", handler.UpdateClientHandler)
+		v1.DELETE("/client", handler.DeleteClientHandler)
 	}
 }

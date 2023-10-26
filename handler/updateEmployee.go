@@ -45,7 +45,7 @@ func UpdateEmployeeHandler(c *gin.Context) {
 		},
 	}
 
-	if err := db.First(&employee, id).Error; err != nil {
+	if err := db.Preload("User.Address").First(&employee, id).Error; err != nil {
 		logger.ErrorF("Employee of id: %s not found", id)
 		sendError(c, http.StatusNotFound, fmt.Sprintf("O funcionário de id: %v não foi encontrado", id))
 		return
