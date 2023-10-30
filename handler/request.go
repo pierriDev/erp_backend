@@ -283,3 +283,29 @@ func (r *UpdateClientRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// CATEGORY REQUESTS
+type CreateCategoryRequest struct {
+	Title string `json:"title"`
+}
+
+func (r *CreateCategoryRequest) Validate() error {
+	if r.Title == "" {
+		return errParamIsRequired("`Titulo`", "string")
+	}
+
+	return nil
+}
+
+type UpdateCategoryRequest struct {
+	Title string `json:"title"`
+}
+
+func (r *UpdateCategoryRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Title != "" {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}

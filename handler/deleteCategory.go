@@ -8,7 +8,7 @@ import (
 	"github.com/pierriDev/erp_backend.git/schemas"
 )
 
-func DeleteClientHandler(c *gin.Context) {
+func DeleteCategoryHandler(c *gin.Context) {
 	id := c.Query("id")
 	if id == "" {
 		logger.ErrorF("A Query da requisição está vazia ou mal formada")
@@ -16,20 +16,20 @@ func DeleteClientHandler(c *gin.Context) {
 		return
 	}
 
-	client := schemas.Client{}
-	// FIND OPENING
-	if err := db.First(&client, id).Error; err != nil {
-		logger.ErrorF("Client of id: %s not found", id)
-		sendError(c, http.StatusNotFound, fmt.Sprintf("O cliente de id: %v não foi encontrado", id))
+	category := schemas.Category{}
+	// FIND CATEGORY
+	if err := db.First(&category, id).Error; err != nil {
+		logger.ErrorF("Category of id: %s not found", id)
+		sendError(c, http.StatusNotFound, fmt.Sprintf("A categoria de id: %v não foi encontrada", id))
 		return
 	}
 
-	//Delete Opening
-	if err := db.Delete(&client).Error; err != nil {
-		logger.ErrorF("Error deleting the client with id: %s", id)
+	//Delete CAategory
+	if err := db.Delete(&category).Error; err != nil {
+		logger.ErrorF("Error deleting the category with id: %s", id)
 		sendError(c, http.StatusInternalServerError, "Ocorreu um erro, tente novamente mais tarde")
 		return
 	}
 
-	sendSuccess(c, client)
+	sendSuccess(c, category)
 }

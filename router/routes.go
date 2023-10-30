@@ -34,5 +34,12 @@ func initializeRoutes(router *gin.Engine) {
 		v1.POST("/client", handler.CreateClientHandler)
 		v1.PUT("/client", handler.UpdateClientHandler)
 		v1.DELETE("/client", handler.DeleteClientHandler)
+
+		//CATEGORY
+		v1.GET("/categories", handler.ListCategoryHandler)
+		v1.GET("/category", handler.GetCategoryHandler)
+		v1.POST("/category", handler.CreateCategoryHandler)
+		v1.PUT("/category", handler.UpdateCategoryHandler)
+		v1.DELETE("/category", handler.DeleteCategoryHandler)
 	}
 }
