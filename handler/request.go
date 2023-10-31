@@ -309,3 +309,49 @@ func (r *UpdateCategoryRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// Product REQUESTS
+type CreateProductRequest struct {
+	Title       string  `json:"title"`
+	Price       float32 `json:"price"`
+	Code        string  `json:"code"`
+	Description string  `json:"description"`
+	CategoryID  int     `json:"categoryId"`
+}
+
+func (r *CreateProductRequest) Validate() error {
+	if r.Title == "" {
+		return errParamIsRequired("`Titulo`", "string")
+	}
+	if r.Price <= 0 {
+		return errParamIsRequired("`Price`", "float")
+	}
+	if r.Code == "" {
+		return errParamIsRequired("`Codigo`", "string")
+	}
+	if r.Description == "" {
+		return errParamIsRequired("`Descrição`", "string")
+	}
+	if r.CategoryID <= 0 {
+		return errParamIsRequired("`Categoria`", "id")
+	}
+
+	return nil
+}
+
+type UpdateProductRequest struct {
+	Title       string  `json:"title"`
+	Price       float32 `json:"price"`
+	Code        string  `json:"code"`
+	Description string  `json:"description"`
+	CategoryID  int     `json:"categoryId"`
+}
+
+func (r *UpdateProductRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Title != "" || r.Price > 0 || r.Code != "" || r.Description != "" || r.CategoryID > 0 {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}

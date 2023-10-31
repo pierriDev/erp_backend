@@ -25,9 +25,7 @@ func UpdateCategoryHandler(c *gin.Context) {
 		return
 	}
 
-	category := schemas.Category{
-		Title: request.Title,
-	}
+	category := schemas.Category{}
 
 	// }
 	if err := db.First(&category, id).Error; err != nil {

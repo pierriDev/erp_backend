@@ -42,17 +42,6 @@ func UpdateClientHandler(c *gin.Context) {
 			},
 		},
 	}
-	// address := user.Address
-
-	// address := schemas.Address{
-	// 	Adress:       request.Address,
-	// 	Number:       request.Number,
-	// 	Neighborhood: request.Neighborhood,
-	// 	CEP:          request.CEP,
-	// 	City:         request.City,
-	// 	State:        request.State,
-	// 	Country:      request.Country,
-	// }
 
 	if err := db.Preload("User.Address").First(&client, id).Error; err != nil {
 		logger.ErrorF("Client of id: %s not found", id)
@@ -61,10 +50,6 @@ func UpdateClientHandler(c *gin.Context) {
 	}
 
 	logger.InfoF("Selected Client %+v", client)
-
-	// OLD VARIABLES
-	// oldUser := user
-	// oldAddress := address
 
 	// Update Client
 	if request.Name != "" {
@@ -101,23 +86,7 @@ func UpdateClientHandler(c *gin.Context) {
 		client.User.Address.Country = request.Country
 	}
 
-	//Save Opening
-	// if err := db.Save(&address).Error; err != nil {
-	// 	logger.ErrorF("error updating adress: %v", err.Error())
-	// 	sendError(c, http.StatusInternalServerError, "Ocorreu um erro. Tente novamente mais tarde")
-	// 	return
-	// }
-
 	if err := db.Save(&client).Error; err != nil {
-		// 	client.User = oldUser
-		// 	address = oldAddress
-		// 	if err := db.Save(&address).Error; err != nil {
-		// 		logger.ErrorF("error updating adress: %v", err.Error())
-		// 	}
-		// 	if err := db.Save(&user).Error; err != nil {
-		// 		logger.ErrorF("error updating user: %v", err.Error())
-		// 	}
-
 		logger.ErrorF("error updating client: %v", err.Error())
 		sendError(c, http.StatusInternalServerError, "Ocorreu um erro. Tente novamente mais tarde")
 		return

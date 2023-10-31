@@ -13,9 +13,8 @@ type Product struct {
 	Price       float32
 	Code        string
 	Description string
-	BuyPrice    float32
 
-	CategoryId int
+	CategoryID int
 	Category   Category
 }
 
@@ -28,5 +27,5 @@ type ProductResponse struct {
 	Price       float32   `json:"price"`
 	Code        string    `json:"code"`
 	Description string    `json:"description"`
-	BuyPrice    float32   `json:"buyprice"`
+	CategoryID  int       `json:"categoryId"`
 }
