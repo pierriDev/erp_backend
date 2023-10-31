@@ -62,5 +62,12 @@ func initializeRoutes(router *gin.Engine) {
 		v1.POST("/supplier", handler.CreateSupplierHandler)
 		v1.PUT("/supplier", handler.UpdateSupplierHandler)
 		v1.DELETE("/supplier", handler.DeleteSupplierHandler)
+
+		//PAYMENT METHOD
+		v1.GET("/paymentmethods", handler.ListPaymentMethodHandler)
+		v1.GET("/paymentmethod", handler.GetPaymentMethodHandler)
+		v1.POST("/paymentmethod", handler.CreatePaymentMethodHandler)
+		v1.PUT("/paymentmethod", handler.UpdatePaymentMethodHandler)
+		v1.DELETE("/paymentmethod", handler.DeletePaymentMethodHandler)
 	}
 }

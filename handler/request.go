@@ -472,3 +472,37 @@ func (r *UpdateSupplierRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// CATEGORY REQUESTS
+type CreatePaymentMethodRequest struct {
+	Title string  `json:"title"`
+	Tax   float32 `json:"tax"`
+}
+
+func (r *CreatePaymentMethodRequest) Validate() error {
+	if r.Title == "" {
+		return errParamIsRequired("`Titulo`", "string")
+	}
+	if r.Tax < 0 {
+		return errParamIsRequired("`Tax`", "Float")
+	}
+
+	return nil
+}
+
+type UpdatePaymentMethodRequest struct {
+	Title string  `json:"title"`
+	Tax   float32 `json:"tax"`
+}
+
+func (r *UpdatePaymentMethodRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Title != "" {
+		return nil
+	}
+	if r.Tax >= 0 {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}
