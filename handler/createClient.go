@@ -20,10 +20,10 @@ func CreateClientHandler(c *gin.Context) {
 
 	client := schemas.Client{
 		User: schemas.User{
-			Name:  request.Name,
-			CPF:   request.CPF,
-			Phone: request.Phone,
-			Email: request.Email,
+			Name:       request.Name,
+			NationalID: request.NationalID,
+			Phone:      request.Phone,
+			Email:      request.Email,
 			Address: schemas.Address{
 				Adress:       request.Adress,
 				Number:       request.Number,

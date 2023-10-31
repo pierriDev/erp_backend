@@ -19,10 +19,10 @@ func CreateUserHandler(c *gin.Context) {
 	}
 
 	user := schemas.User{
-		Name:  request.Name,
-		CPF:   request.CPF,
-		Phone: request.Phone,
-		Email: request.Email,
+		Name:       request.Name,
+		NationalID: request.NationalID,
+		Phone:      request.Phone,
+		Email:      request.Email,
 		Address: schemas.Address{
 			Adress:       request.Adress,
 			Number:       request.Number,

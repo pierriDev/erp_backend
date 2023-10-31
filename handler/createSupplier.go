@@ -7,8 +7,8 @@ import (
 	"github.com/pierriDev/erp_backend.git/schemas"
 )
 
-func CreateEmployeeHandler(c *gin.Context) {
-	request := CreateUserWorkerRequest{}
+func CreateSupplierHandler(c *gin.Context) {
+	request := CreateSupplierRequest{}
 
 	c.BindJSON(&request)
 
@@ -18,9 +18,7 @@ func CreateEmployeeHandler(c *gin.Context) {
 		return
 	}
 
-	employee := schemas.Employee{
-		Password: request.Password,
-		Picture:  request.Picture,
+	supplier := schemas.Supplier{
 		User: schemas.User{
 			Name:       request.Name,
 			NationalID: request.NationalID,
@@ -38,11 +36,10 @@ func CreateEmployeeHandler(c *gin.Context) {
 		},
 	}
 
-	if err := db.Create(&employee).Error; err != nil {
-		logger.ErrorF("Error creating Employee: %v", err.Error())
-		sendError(c, http.StatusInternalServerError, "Ocorreu um erro ao criar seu funcionário. Tente novamente mais tarde")
+	if err := db.Create(&supplier).Error; err != nil {
+		logger.ErrorF("Error creating Supplier: %v", err.Error())
+		sendError(c, http.StatusInternalServerError, "Ocorreu um erro ao criar seu fornecedor. Tente novamente mais tarde")
 		return
 	}
-	sendSuccess(c, employee)
-
+	sendSuccess(c, supplier)
 }
