@@ -355,3 +355,41 @@ func (r *UpdateProductRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// Stock REQUESTS
+type CreateStockRequest struct {
+	Quantity   int     `json:"quantity"`
+	PriceOfBuy float32 `json:"priceofbuy"`
+	ProductID  int     `json:"productId"`
+	SupplierID int     `json:"supplierId"`
+}
+
+func (r *CreateStockRequest) Validate() error {
+	if r.Quantity <= 0 {
+		return errParamIsRequired("`Quantidade`", "int")
+	}
+	if r.PriceOfBuy <= 0 {
+		return errParamIsRequired("`Valor de Compra`", "float")
+	}
+	if r.ProductID <= 0 {
+		return errParamIsRequired("`Produto`", "produto")
+	}
+	if r.SupplierID <= 0 {
+		return errParamIsRequired("`Fornecedor`", "fornecedor")
+	}
+
+	return nil
+}
+
+type UpdateStockRequest struct {
+	Quantity int `json:"quantity"`
+}
+
+func (r *UpdateStockRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Quantity >= 0 {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}

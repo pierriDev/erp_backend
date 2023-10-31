@@ -49,5 +49,11 @@ func initializeRoutes(router *gin.Engine) {
 		v1.PUT("/product", handler.UpdateProductHandler)
 		v1.DELETE("/product", handler.DeleteProductHandler)
 
+		//STOCK
+		v1.GET("/stocks", handler.ListStockHandler)
+		v1.GET("/stock", handler.GetStockHandler)
+		v1.POST("/stock", handler.CreateStockHandler)
+		v1.PUT("/stock", handler.UpdateStockHandler)
+		v1.DELETE("/stock", handler.DeleteStockHandler)
 	}
 }
