@@ -506,3 +506,51 @@ func (r *UpdatePaymentMethodRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// SELL REQUESTS
+type CreateSellRequest struct {
+	TotalValue      float32 `json:"totalValue"`
+	PaymentMethodID int     `json:"paymentMethodId"`
+	Status          string  `json:"status"`
+	ClientID        int     `json:"clientId"`
+	EmployeeID      int     `json:"employeeId"`
+
+	Products []ProductSell
+}
+
+type ProductSell struct {
+	Quantity  int `json:"quantity"`
+	ProductID int `json:"productId"`
+}
+
+func (r *CreateSellRequest) Validate() error {
+	if r.TotalValue <= 0 {
+		return errParamIsRequired("`Valor Total`", "float")
+	}
+	if r.PaymentMethodID <= 0 {
+		return errParamIsRequired("`Metodo de Pagamento`", "Id do Metodo")
+	}
+	if r.EmployeeID <= 0 {
+		return errParamIsRequired("`Funcionario`", "Id do Funcionário")
+	}
+	if len(r.Products) <= 0 {
+		return errParamIsRequired("`Produto`", "Id do Produto e Quantidade")
+
+	}
+
+	return nil
+}
+
+type UpdateSellRequest struct {
+	Status string `json:"status"`
+}
+
+func (r *UpdateSellRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Status != "" {
+		return nil
+	}
+
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}
