@@ -554,3 +554,64 @@ func (r *UpdateSellRequest) Validate() error {
 	// If none of the fields were provided, return falsy
 	return fmt.Errorf("Passe pelo menos um campo na request")
 }
+
+// BILL REQUESTS
+type CreateBillRequest struct {
+	Title       string  `json:"title"`
+	Value       float32 `json:"value"`
+	Description string  `json:"description"`
+	BillingDay  int     `json:"billingday"`
+	IsPaid      *bool   `json:"ispaid"`
+}
+
+func (r *CreateBillRequest) Validate() error {
+	if r.Title == "" {
+		return errParamIsRequired("`Titulo`", "string")
+	}
+	if r.Value <= 0 {
+		return errParamIsRequired("`Valor`", "float")
+	}
+	if r.Description == "" {
+		return errParamIsRequired("`Valor Total`", "float")
+	}
+	if r.BillingDay <= 0 {
+		return errParamIsRequired("`Valor Total`", "float")
+	}
+	if r.IsPaid == nil {
+		return errParamIsRequired("Remote", "boolean")
+	}
+
+	return nil
+}
+
+type UpdateBillRequest struct {
+	Title       string  `json:"title"`
+	Value       float32 `json:"value"`
+	Description string  `json:"description"`
+	BillingDay  int     `json:"billingday"`
+	IsPaid      *bool   `json:"ispaid"`
+}
+
+func (r *UpdateBillRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Title != "" || r.Value <= 0 || r.Description == "" || r.BillingDay <= 0 || r.IsPaid != nil {
+		return nil
+	}
+
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
+}
+
+type PayBillRequest struct {
+	IsPaid *bool `json:"ispaid"`
+}
+
+func (r *PayBillRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.IsPaid != nil {
+		return errParamIsRequired("Remote", "boolean")
+	}
+
+	// If none of the fields were provided, return falsy
+	return nil
+}
