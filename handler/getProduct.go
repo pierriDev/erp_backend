@@ -8,6 +8,18 @@ import (
 	"github.com/pierriDev/erp_backend.git/schemas"
 )
 
+type productReturnType struct {
+	ID          int     `json:"id"`
+	Title       string  `json:"title"`
+	Price       float32 `json:"price"`
+	BuyPrice    float32 `json:"buyprice"`
+	Code        string  `json:"code"`
+	Description string  `json:"description"`
+	CategoryID  int     `json:"categoryId"`
+
+	Supplier schemas.Supplier
+}
+
 func GetProductHandler(c *gin.Context) {
 	id := c.Query("id")
 	if id == "" {
@@ -24,5 +36,25 @@ func GetProductHandler(c *gin.Context) {
 		return
 	}
 
-	sendSuccess(c, product)
+	productSupplier := schemas.ProductSupplier{}
+
+	if err := db.Preload("Supplier.User.Address").First(&productSupplier, product.ID).Error; err != nil {
+		logger.ErrorF("Relation between product and supplier of product with id: %d not found", product.ID)
+		sendError(c, http.StatusNotFound, fmt.Sprintf("Ocorreu um erro. Tente novamente mais tarde"))
+		return
+	}
+
+	productReturn := productReturnType{
+		ID:          product.ID,
+		Title:       product.Title,
+		Price:       product.Price,
+		BuyPrice:    productSupplier.BuyPrice,
+		Code:        product.Code,
+		Description: product.Description,
+		CategoryID:  product.CategoryID,
+
+		Supplier: productSupplier.Supplier,
+	}
+
+	sendSuccess(c, productReturn)
 }

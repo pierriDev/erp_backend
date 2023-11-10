@@ -43,10 +43,13 @@ func UpdateProductHandler(c *gin.Context) {
 	// Update Category
 	if request.Title != "" {
 		product.Title = request.Title
-		product.Price = request.Price
-		product.Code = request.Code
 		product.Description = request.Description
 		product.CategoryID = category.ID
+	}
+
+	if request.Price > 0 {
+		product.Price = request.Price
+
 	}
 
 	if err := db.Save(&product).Error; err != nil {

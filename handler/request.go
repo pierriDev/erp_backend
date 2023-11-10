@@ -314,9 +314,11 @@ func (r *UpdateCategoryRequest) Validate() error {
 type CreateProductRequest struct {
 	Title       string  `json:"title"`
 	Price       float32 `json:"price"`
+	BuyPrice    float32 `json:"buyprice"`
 	Code        string  `json:"code"`
 	Description string  `json:"description"`
 	CategoryID  int     `json:"categoryId"`
+	SupplierID  int     `json:"supplierId"`
 }
 
 func (r *CreateProductRequest) Validate() error {
@@ -326,9 +328,10 @@ func (r *CreateProductRequest) Validate() error {
 	if r.Price <= 0 {
 		return errParamIsRequired("`Price`", "float")
 	}
-	if r.Code == "" {
-		return errParamIsRequired("`Codigo`", "string")
+	if r.BuyPrice <= 0 {
+		return errParamIsRequired("`BuyPrice`", "float")
 	}
+
 	if r.Description == "" {
 		return errParamIsRequired("`Descrição`", "string")
 	}
@@ -342,14 +345,15 @@ func (r *CreateProductRequest) Validate() error {
 type UpdateProductRequest struct {
 	Title       string  `json:"title"`
 	Price       float32 `json:"price"`
-	Code        string  `json:"code"`
+	BuyPrice    float32 `json:"buyprice"`
 	Description string  `json:"description"`
 	CategoryID  int     `json:"categoryId"`
+	SupplierID  int     `json:"supplierId"`
 }
 
 func (r *UpdateProductRequest) Validate() error {
 	// IF ANY EXISTS IS TRUE
-	if r.Title != "" || r.Price > 0 || r.Code != "" || r.Description != "" || r.CategoryID > 0 {
+	if r.Title != "" || r.Price > 0 || r.BuyPrice > 0 || r.Description != "" || r.CategoryID > 0 || r.SupplierID > 0 {
 		return nil
 	}
 	// If none of the fields were provided, return falsy
