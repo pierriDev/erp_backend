@@ -53,6 +53,8 @@ func InitializeSQLite() (*gorm.DB, error) {
 		&schemas.SellProduct{},
 		&schemas.Bill{},
 		&schemas.ProductSupplier{},
+		&schemas.Promotion{},
+		&schemas.PromotionProduct{},
 	)
 	if err != nil {
 		logger.ErrorF("sqlite auto migration error: %v", err)

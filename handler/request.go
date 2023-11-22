@@ -1,6 +1,9 @@
 package handler
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func errParamIsRequired(name, typ string) error {
 	return fmt.Errorf("O parâmetro: %s (do tipo: %s) é obrigatório", name, typ)
@@ -618,4 +621,56 @@ func (r *PayBillRequest) Validate() error {
 
 	// If none of the fields were provided, return falsy
 	return nil
+}
+
+// Promotion REQUESTS
+type CreatePromotionRequest struct {
+	Title     string `json:"title"`
+	DateStart string `json:"dateStart"`
+	DateEnd   string `json:"dateEnd"`
+	IsActive  *bool  `json:"isActive"`
+
+	Products []PromotionProductType
+}
+
+type PromotionProductType struct {
+	ProductID int     `json:"productId"`
+	Value     float32 `json:"value"`
+}
+
+func (r *CreatePromotionRequest) Validate() error {
+	if r.Title == "" {
+		return errParamIsRequired("`Titulo`", "string")
+	}
+	if r.DateStart == "" {
+		return errParamIsRequired("`Data do Inicio`", "date")
+	}
+	if r.DateEnd == "" {
+		return errParamIsRequired("`Data do fim`", "date")
+	}
+	if r.IsActive == nil {
+		return errParamIsRequired("Esta ativo", "boolean")
+	}
+	if len(r.Products) <= 0 {
+		return errParamIsRequired("Lista de Produtos", "Produto")
+
+	}
+
+	return nil
+}
+
+type UpdatePromotionRequest struct {
+	Title     string     `json:"title"`
+	DateStart *time.Time `json:"dateStart"`
+	DateEnd   *time.Time `json:"dateEnd"`
+	IsActive  *bool      `json:"isActive"`
+}
+
+func (r *UpdatePromotionRequest) Validate() error {
+	// IF ANY EXISTS IS TRUE
+	if r.Title != "" || r.DateStart != nil || r.DateEnd != nil || r.IsActive != nil {
+		return nil
+	}
+	// If none of the fields were provided, return falsy
+	return fmt.Errorf("Passe pelo menos um campo na request")
 }
